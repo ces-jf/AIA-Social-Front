@@ -23,6 +23,7 @@ import {
     Label,
     Spinner,
     CardBody,
+    Tooltip,
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
@@ -49,7 +50,8 @@ class Sheets extends React.Component {
             attributes: [],
             isOpenModalResultado: false,
             resultado: "",
-            limit: 1000
+            limit: 1000,
+            tooltipCondicao: false
         }
     }
 
@@ -360,7 +362,13 @@ class Sheets extends React.Component {
                                             <tr>
                                                 <th scope="col">Filtro</th>
                                                 <th scope="col">Atributo</th>
-                                                <th scope="col">Condição</th>
+                                                <th scope="col">
+                                                    <span id="condicao-span">Condição</span>
+                                                    <i className="fa fa-question-circle ml-1 text-primary" onMouseOver={() => this.setState({tooltipCondicao: true})} onMouseOut={() => this.setState({tooltipCondicao: false})}/>
+                                                    <Tooltip target={`condicao-span`} isOpen={this.state.tooltipCondicao}>
+                                                        Consulte o dicionário da sua base de dados e informe um valor válido para ser procurado
+                                                    </Tooltip>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -385,7 +393,7 @@ class Sheets extends React.Component {
                                                         <td>
                                                             <FormGroup className="mb-0">
                                                                 <InputGroup className="input-group-alternative">
-                                                                    <Input value={this.state.attributes[indice].condition} onChange={(event) => this.handlerUpdateCondition(attribute.id, event.target.value)} placeholder="Ex.: >=10" type="text" autoComplete="off" />
+                                                                    <Input value={this.state.attributes[indice].condition} onChange={(event) => this.handlerUpdateCondition(attribute.id, event.target.value)} placeholder="Consulte sua base de dados" type="text" autoComplete="off" />
                                                                 </InputGroup>
                                                             </FormGroup>
                                                         </td>
